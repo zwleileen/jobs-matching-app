@@ -1,0 +1,17 @@
+meta {
+  name: SG Jobs - Category
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://www.themuse.com/api/public/jobs?category=Software%20Engineering&location=Singapore&page=1
+  body: none
+  auth: none
+}
+
+params:query {
+  category: Software Engineering
+  location: Singapore
+  page: 1
+}

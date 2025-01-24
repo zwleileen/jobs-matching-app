@@ -1,0 +1,24 @@
+meta {
+  name: Multiple Countries - Multiple Categories
+  type: http
+  seq: 7
+}
+
+get {
+  url: https://www.themuse.com/api/public/jobs?category=Data%20and%20Analytics&category=Product%20Management&category=Software%20Engineer&location=Melbourne%2C%20Australia&location=Seoul%2C%20South%20Korea&location=Shanghai%2C%20China&location=Singapore&location=Taipei%2C%20Taiwan&location=Tokyo%2C%20Japan&page=2
+  body: none
+  auth: none
+}
+
+params:query {
+  category: Data and Analytics
+  category: Product Management
+  category: Software Engineer
+  location: Melbourne, Australia
+  location: Seoul, South Korea
+  location: Shanghai, China
+  location: Singapore
+  location: Taipei, Taiwan
+  location: Tokyo, Japan
+  page: 2
+}
