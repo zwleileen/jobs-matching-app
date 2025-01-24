@@ -10,6 +10,10 @@ const App = () => {
 
   const [jobsData, setJobsData] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+  const [searchInputs, setSearchInputs] = useState({
+    location: "",
+    category: ""
+});
 
   useEffect(() => {
     fetchData();
@@ -27,21 +31,20 @@ const App = () => {
       link: job.refs.landing_page
     }))
     setJobsData(formattedData);
-    setSearchResults(formattedData);
   }
   
   console.log(jobsData);
 
-  
-  // const handleSearch = () => {
-  //   const searches = props.jobs.filter(job =)
-  // }
+  const handleSearch = (searchInputs) => {
+    const searches = jobsData.filter(job => job.location === searchInputs.location && job.role.includes(searchInputs.category))
+    setSearchResults(searches)
+}
 
   return (
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults}/>} />
+    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs}/>} />
     <Route path="savedjobs" element={<SavedResults/>}/>
   </Routes>
   </>
