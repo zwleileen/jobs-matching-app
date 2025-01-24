@@ -1,12 +1,15 @@
+import { useNavigate } from "react-router"
 import SearchInputs from "../SearchInputs/SearchInputs"
 import SearchResults from "../SearchResults/SearchResults"
 
 const HomePage = () => {
+
+    const navigate = useNavigate();
+
     return (
     <>
         <div className="homepage">
-        <button className="home">Home</button>
-        <button className="savedjobs">Saved Jobs</button>
+        <button onClick={() => navigate(`/savedjobs`)} >Saved Jobs</button>
         </div>
         <SearchInputs />
         <SearchResults/>
