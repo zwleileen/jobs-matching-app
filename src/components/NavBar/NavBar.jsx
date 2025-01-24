@@ -1,9 +1,14 @@
+import SearchInputs from "../SearchInputs/SearchInputs"
+
 const NavBar = () => {
     return (
+    <>
         <div className="navbar">
-        <button>Home</button>
-        <button>Saved Jobs</button>
+        <button className="home">Home</button>
+        <button className="savedjobs">Saved Jobs</button>
         </div>
+        <SearchInputs />
+    </>
     )
 }
 
