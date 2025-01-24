@@ -1,10 +1,18 @@
-import { useState } from "react"
-
-const SearchResults = () => {
+const SearchResults = (props) => {
 
     return (
         <>
-        <p>No result to show, try modifying your search</p>
+        {!props.searchResults.length ? (
+        <p>No result to show, try modifying your search</p> 
+        ) : (
+        <ul>
+        {props.searchResults.map((result) => (
+            <li key={result.id}>
+                <h3>{result.role}</h3>
+            </li>
+        ))}
+    </ul>
+        )}
         </>
     )
 }

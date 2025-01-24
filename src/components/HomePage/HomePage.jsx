@@ -2,7 +2,7 @@ import { useNavigate } from "react-router"
 import SearchInputs from "../SearchInputs/SearchInputs"
 import SearchResults from "../SearchResults/SearchResults"
 
-const HomePage = () => {
+const HomePage = (props) => {
 
     const navigate = useNavigate();
 
@@ -12,7 +12,7 @@ const HomePage = () => {
         <button onClick={() => navigate(`/savedjobs`)} >Saved Jobs</button>
         </div>
         <SearchInputs />
-        <SearchResults/>
+        <SearchResults jobs={props.jobsData} searchResults={props.searchResults}/>
     </>
     )
 }

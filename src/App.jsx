@@ -9,7 +9,7 @@ import * as jobService from './services/jobService';
 const App = () => {
 
   const [jobsData, setJobsData] = useState([]);
-  const [searchResults, setSearchResults] = useState();
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -41,7 +41,7 @@ const App = () => {
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage jobs={jobsData} />} />
+    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults}/>} />
     <Route path="savedjobs" element={<SavedResults/>}/>
   </Routes>
   </>
