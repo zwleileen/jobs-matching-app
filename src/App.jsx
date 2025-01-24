@@ -1,8 +1,8 @@
 // src/App.jsx
 import './App.css'
 import { Route, Routes } from "react-router-dom";
-import NavBar from './components/NavBar/NavBar';
-import SearchInputs from './components/SearchInputs/SearchInputs';
+// import SearchInputs from './components/SearchInputs/SearchInputs';
+import HomePage from './components/HomePage/HomePage';
 
 const App = () => {
 
@@ -10,8 +10,8 @@ const App = () => {
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<NavBar/>} >
-      <Route path="searchInputs" element={<SearchInputs/>}/>
+    <Route path="/" element={<HomePage/>} >
+      {/* <Route path="searchInputs" element={<SearchInputs/>}/> */}
     </Route>
   </Routes>
   </>

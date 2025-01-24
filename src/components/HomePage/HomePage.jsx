@@ -1,15 +1,17 @@
 import SearchInputs from "../SearchInputs/SearchInputs"
+import SearchResults from "../SearchResults/SearchResults"
 
-const NavBar = () => {
+const HomePage = () => {
     return (
     <>
-        <div className="navbar">
+        <div className="homepage">
         <button className="home">Home</button>
         <button className="savedjobs">Saved Jobs</button>
         </div>
         <SearchInputs />
+        <SearchResults/>
     </>
     )
 }
 
-export default NavBar
+export default HomePage

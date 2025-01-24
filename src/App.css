@@ -16,12 +16,12 @@ h1 {
   margin-bottom: 0;
 }
 
-.navbar {
+.homepage {
   display: flex;
   justify-content: space-between;
 }
 
-button {
+.homepage button {
   font-family: "Handlee", serif;
   margin: 0 20px 10px;
   padding: 8px 16px;
