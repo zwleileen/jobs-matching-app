@@ -8,7 +8,8 @@ import * as jobService from './services/jobService';
 
 const App = () => {
 
-  const [jobs, setJobs] = useState([]);
+  const [jobsData, setJobsData] = useState([]);
+  const [searchResults, setSearchResults] = useState();
 
   useEffect(() => {
     fetchData();
@@ -16,16 +17,31 @@ const App = () => {
   
   const fetchData = async () => {
     const data = await jobService.index();
-    setJobs(data);
+    // console.log(data)
+    const formattedData = data.results.map(job => (
+    {
+      id: job.id,
+      company: job.company.name,
+      location: job.locations[0].name,
+      role: job.name,
+      link: job.refs.landing_page
+    }))
+    setJobsData(formattedData);
+    setSearchResults(formattedData);
   }
   
-  console.log(jobs);
+  console.log(jobsData);
+
+  
+  // const handleSearch = () => {
+  //   const searches = props.jobs.filter(job =)
+  // }
 
   return (
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage/>} />
+    <Route path="/" element={<HomePage jobs={jobsData} />} />
     <Route path="savedjobs" element={<SavedResults/>}/>
   </Routes>
   </>

@@ -43,7 +43,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-.searchboxes {
+form {
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
@@ -51,7 +51,7 @@ h1 {
   gap: 30px;
 }
 
-.searchboxes select {
+form select {
   font-family: "Handlee", serif;
   margin: 0;
   padding: 10px 20px;
@@ -60,7 +60,7 @@ h1 {
   background-color: white;
 }
 
-.searchboxes button {
+form button {
   font-family: "Handlee", serif;
   margin: 0;
   padding: 2px 8px;
