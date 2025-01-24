@@ -1,8 +1,13 @@
 const SearchInputs = (props) => {
 
     const handleChange = ({target}) => {
-        props.setSearchInputs({...props.searchInputs, [target.name]: target.value})
-        props.handleSearch(props.searchInputs)
+        const newInputs = {...props.searchInputs, [target.name]: target.value}
+        props.setSearchInputs(newInputs);
+        props.handleSearch(newInputs);
+    }
+
+    const reset = () => {
+        props.setSearchResults([]);
     }
     
     return (
@@ -25,7 +30,7 @@ const SearchInputs = (props) => {
                 <option value="Product Management">Product Management</option>
                 <option value="Data and Analytics">Data and Analytics</option>
             </select>
-            <button>Clear Search</button>
+            <button onClick={reset}>Clear Search</button>
             </form>
         </div>
         </>

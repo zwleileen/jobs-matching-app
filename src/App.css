@@ -90,3 +90,18 @@ form button {
   flex-direction: column;
   justify-content: center;
 }
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+li {
+  border: 1px solid black;
+  width: 200px;
+  border-radius: 10px;
+  padding: 5px;
+}

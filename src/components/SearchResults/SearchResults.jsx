@@ -13,7 +13,7 @@ const SearchResults = (props) => {
                 <p>{result.location}</p>
             </li>
         ))}
-    </ul>
+        </ul>
         )}
         </>
     )

@@ -35,9 +35,13 @@ const App = () => {
   
   console.log(jobsData);
 
-  const handleSearch = (searchInputs) => {
-    const searches = jobsData.filter(job => job.location === searchInputs.location && job.role.includes(searchInputs.category))
-    setSearchResults(searches)
+  const handleSearch = (newInputs) => {
+    console.log('searching with:', newInputs)
+    const searches = jobsData.filter(job => {
+      console.log('job:', job.location, job.role);
+      return job.location === newInputs.location && job.role.includes(newInputs.category);
+    });
+    setSearchResults(searches);
 }
 
   return (
