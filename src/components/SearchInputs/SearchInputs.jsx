@@ -27,7 +27,7 @@ const SearchInputs = (props) => {
             </select>
             <select id="category" name="category" value={props.searchInputs.category} onChange={handleChange}>
                 <option value="">Category</option>
-                <option value="Software Engineering">Software Engineering</option>
+                <option value="Software%20Engineering">Software Engineering</option>
                 <option value="Product%20Management">Product Management</option>
                 <option value="Data%20and%20Analytics">Data and Analytics</option>
             </select>

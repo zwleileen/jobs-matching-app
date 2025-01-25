@@ -19,31 +19,37 @@ const App = () => {
   
   const fetchData = useCallback(async () => {
     const data = await jobService.index(category);
-    console.log(data)
+    console.log(data) 
     const formattedData = data.results.map(job => (
     {
       id: job.id,
       company: job.company?.name || 'Unknown Company',
       location: job.locations?.[0]?.name || 'No location listed',
-      role: job.name,
+      role: job.categories?.[0]?.name || 'No role listed',
       link: job.refs?.landing_page || '#'
     }))
     setJobsData(formattedData);
   }, [category]);
   
-  // console.log(jobsData);
+  console.log(jobsData);
+
+  useEffect(() => {
+  if (searchInputs.category) {
+    const searches = jobsData.filter(job => {
+      const encodedRole = encodeURIComponent(job.role);
+      return job.location === searchInputs.location || encodedRole === searchInputs.category;
+    });
+    setSearchResults(searches);
+    }
+  }, [jobsData, searchInputs]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
   const handleSearch = (newInputs) => {
-    console.log('searching with:', newInputs)
-    const searches = jobsData.filter(job => {
-      // console.log('job:', job.location, job.role);
-      return job.location === newInputs.location || job.role.includes(newInputs.category);
-    });
-    setSearchResults(searches);
-    setCategory(newInputs.category)
+    setCategory(newInputs.category);
+    setSearchInputs(newInputs);
   }
 
   return (
