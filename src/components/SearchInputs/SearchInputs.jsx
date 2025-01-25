@@ -17,6 +17,7 @@ const SearchInputs = (props) => {
             <form>
             <select id="location" name="location" value={props.searchInputs.location} onChange={handleChange}>
                 <option value="">Location</option>
+                <option value="Flexible / Remote">Flexible / Remote</option>
                 <option value="Singapore">Singapore</option>
                 <option value="Shanghai, China">Shanghai, China</option>
                 <option value="Seoul, South Korea">Seoul, South Korea</option>

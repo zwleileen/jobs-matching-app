@@ -22,7 +22,7 @@ const App = () => {
   
   const fetchData = async () => {
     const data = await jobService.index();
-    // console.log(data)
+    console.log(data)
     const formattedData = data.results.map(job => (
     {
       id: job.id,
@@ -34,12 +34,12 @@ const App = () => {
     setJobsData(formattedData);
   }
   
-  console.log(jobsData);
+  // console.log(jobsData);
 
   const handleSearch = (newInputs) => {
     console.log('searching with:', newInputs)
     const searches = jobsData.filter(job => {
-      console.log('job:', job.location, job.role);
+      // console.log('job:', job.location, job.role);
       return job.location === newInputs.location && job.role.includes(newInputs.category);
     });
     setSearchResults(searches);
