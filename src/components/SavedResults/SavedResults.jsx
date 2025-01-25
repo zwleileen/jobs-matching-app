@@ -6,7 +6,7 @@ const SavedResults = (props) => {
 
     const handleUnsave = (result) => {
         const newSavedResults = props.savedResults.filter(item => item.id !== result.id)
-        props.setSavedResults([...props.savedResults, newSavedResults]);
+        props.setSavedResults(newSavedResults);
     }
 
     return (
