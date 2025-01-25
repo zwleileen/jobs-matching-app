@@ -15,7 +15,7 @@ const App = () => {
     category: ""
   });
   const [savedResults, setSavedResults] = useState([]);
-  const [category, setCategory] = useState("Software Engineering");
+  const [category, setCategory] = useState("Software%20Engineering");
   
   const fetchData = useCallback(async () => {
     const data = await jobService.index(category);
@@ -30,9 +30,14 @@ const App = () => {
     }))
     setJobsData(formattedData);
   }, [category]);
-  
   console.log(jobsData);
 
+  //Note: fetches data when category changes
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  //Notes: filters data when (and AFTER) jobsData or searchInputs update, to make sure we filter the updated data
   useEffect(() => {
   if (searchInputs.category) {
     const searches = jobsData.filter(job => {
@@ -43,14 +48,12 @@ const App = () => {
     }
   }, [jobsData, searchInputs]);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
+  //Notes: why writing filter data in handleSearch doesn't work - User selects new category handleSearch calls setCategory -> handleSearch tries to filter jobsData immediately -> But the API fetch triggered by the category change hasn't completed yet -> So you're filtering old data before new data arrives
   const handleSearch = (newInputs) => {
     setCategory(newInputs.category);
     setSearchInputs(newInputs);
   }
+
 
   return (
   <>

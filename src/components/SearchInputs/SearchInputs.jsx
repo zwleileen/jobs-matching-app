@@ -2,7 +2,6 @@ const SearchInputs = (props) => {
 
     const handleChange = ({target}) => {
         const newInputs = {...props.searchInputs, [target.name]: target.value}
-        props.setSearchInputs(newInputs);
         props.handleSearch(newInputs);
     }
 
