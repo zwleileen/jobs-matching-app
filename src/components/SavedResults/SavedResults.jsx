@@ -4,6 +4,11 @@ const SavedResults = (props) => {
 
     const navigate = useNavigate();
 
+    const handleClick = (link, event) => {
+        if (event.target.closest('.unsave-btn')) return;
+        window.open(link, '_blank', 'noopener,noreferrer')
+    }
+
     const handleUnsave = (result) => {
         const newSavedResults = props.savedResults.filter(item => item.id !== result.id)
         props.setSavedResults(newSavedResults);
@@ -20,7 +25,7 @@ const SavedResults = (props) => {
             ) : (
             <ul>
             {props.savedResults.map((result) => (
-                <li key={result.id}>
+                <li key={result.id} onClick={(event) => handleClick(result.link, event)} style={{ cursor: 'pointer' }}>
                     <button className="unsave-btn" onClick={() => handleUnsave(result)}>
                     <i className="material-icons">favorite</i>
                     </button>

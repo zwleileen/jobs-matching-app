@@ -133,11 +133,28 @@ li p {
   align-self: flex-end;
 }
 
-.material-icons {
+.save-btn .material-icons {
   font-size: 24px;
   color: #020202;
 }
 
-.material-icons:hover {
+.save-btn .material-icons:hover {
   color: #ffea07;
+}
+
+.unsave-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-self: flex-end;
+}
+
+.unsave-btn .material-icons {
+  font-size: 24px;
+  color: #ffea07;
+}
+
+.unsave-btn .material-icons:hover {
+  color: #020202;
 }
