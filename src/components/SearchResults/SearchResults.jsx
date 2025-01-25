@@ -1,6 +1,11 @@
+import { useNavigate } from "react-router"
+
 const SearchResults = (props) => {
 
-    const handleClick = (link) => {
+    const navigate = useNavigate();
+
+    const handleClick = (link, event) => {
+        if (event.target.closest('.save-btn')) return;
         window.open(link, '_blank', 'noopener,noreferrer')
     }
 
@@ -11,8 +16,8 @@ const SearchResults = (props) => {
         ) : (
         <ul>
         {props.searchResults.map((result) => (
-            <li key={result.id} onClick={() => handleClick(result.link)} style={{ cursor: 'pointer' }}>
-                <button className="save-btn">
+            <li key={result.id} onClick={(event) => handleClick(result.link, event)} style={{ cursor: 'pointer' }}>
+                <button className="save-btn" onClick={() => navigate(`/savedjobs`)}>
                 <i className="material-icons">favorite</i>
                 </button>
                 <h3>{result.company}</h3>
