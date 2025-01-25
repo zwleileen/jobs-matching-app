@@ -13,7 +13,8 @@ const App = () => {
   const [searchInputs, setSearchInputs] = useState({
     location: "",
     category: ""
-});
+  });
+  const [savedResults, setSavedResults] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -42,14 +43,14 @@ const App = () => {
       return job.location === newInputs.location && job.role.includes(newInputs.category);
     });
     setSearchResults(searches);
-}
+  }
 
   return (
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs}/>} />
-    <Route path="savedjobs" element={<SavedResults/>}/>
+    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} savedResults={savedResults} setSavedResults={setSavedResults}/>}  />
+    <Route path="savedjobs" element={<SavedResults savedResults={savedResults} setSavedResults={setSavedResults}/>}/>
   </Routes>
   </>
   );

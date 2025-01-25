@@ -9,6 +9,11 @@ const SearchResults = (props) => {
         window.open(link, '_blank', 'noopener,noreferrer')
     }
 
+    const handleSave = (result) => {
+        props.setSavedResults([...props.savedResults, result]);
+        navigate(`/savedjobs`);
+    }
+
     return (
         <>
         {!props.searchResults.length ? (
@@ -17,7 +22,7 @@ const SearchResults = (props) => {
         <ul>
         {props.searchResults.map((result) => (
             <li key={result.id} onClick={(event) => handleClick(result.link, event)} style={{ cursor: 'pointer' }}>
-                <button className="save-btn" onClick={() => navigate(`/savedjobs`)}>
+                <button className="save-btn" onClick={() => handleSave(result)}>
                 <i className="material-icons">favorite</i>
                 </button>
                 <h3>{result.company}</h3>
