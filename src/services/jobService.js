@@ -1,7 +1,8 @@
-const BASE_URL = `https://www.themuse.com/api/public/jobs?category=Data%20and%20Analytics&category=Product%20Management&category=Software%20Engineer&location=Melbourne%2C%20Australia&location=Seoul%2C%20South%20Korea&location=Shanghai%2C%20China&location=Singapore&location=Taipei%2C%20Taiwan&location=Tokyo%2C%20Japan&page=2`;
+const BASE_URL = `https://www.themuse.com/api/public/jobs`;
 
-async function index() {
-  const url = `${BASE_URL}`;
+async function index(category) {
+  const url = `${BASE_URL}?category=${category}&page=2`;
+  console.log(url);
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -13,6 +14,7 @@ async function index() {
     return json;
   } catch (error) {
     console.error(error.message);
+    return { results: [] };
   }
 }
 
