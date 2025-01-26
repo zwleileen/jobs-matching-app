@@ -32,10 +32,17 @@ const SearchResults = (props) => {
                 </button>
                 <h3>{result.company}</h3>
                 <p>Role: {result.role}</p>  
-                {matchingDetail ? 
-                    <p>Industry: {matchingDetail.industries.length ? matchingDetail.industries.join(', ') : 'Not sure, click to find out'}</p> : 
-                    <p>Industry: Not sure, click to find out</p>
-                }
+                {matchingDetail ? (
+                    <>
+                    <p>Industry: {matchingDetail.industries.length ? matchingDetail.industries.join(', ') : 'Not sure, click to read on'}</p> 
+                    {/* <p>Description: {matchingDetail.description || 'Click to find out'}</p> */}
+                    </>
+                ) : (
+                    <>
+                    <p>Industry: Not sure, click to read on</p>
+                    {/* <p>Description: Click to find out</p> */}
+                    </>
+                )}
             </li>
         )})} 
         </ul>

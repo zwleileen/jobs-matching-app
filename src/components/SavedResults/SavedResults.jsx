@@ -24,16 +24,28 @@ const SavedResults = (props) => {
             <p>You have not saved any job</p> 
             ) : (
             <ul>
-            {props.savedResults.map((result) => (
+            {props.savedResults.map((result) => {
+                const matchingDetail = props.companyDetails.find(detail => detail.id === result.companyId);
+                return (
                 <li key={result.id} onClick={(event) => handleClick(result.link, event)} style={{ cursor: 'pointer' }}>
                     <button className="unsave-btn" onClick={() => handleUnsave(result)}>
                     <i className="material-icons">favorite</i>
                     </button>
                     <h3>{result.company}</h3>
-                    <p>{result.role}</p>
-                    <p>{result.location}</p>
+                    <p>Role: {result.role}</p>
+                    {matchingDetail ? (
+                    <>
+                    <p>Industry: {matchingDetail.industries.length ? matchingDetail.industries.join(', ') : 'Not sure, click to read on'}</p> 
+                    {/* <p>Description: {matchingDetail.description || 'Click to find out'}</p> */}
+                    </>
+                ) : (
+                    <>
+                    <p>Industry: Not sure, click to read on</p>
+                    {/* <p>Description: Click to find out</p> */}
+                    </>
+                )}
                 </li>
-            ))}
+            )})}
             </ul>
             )}
         </div>
@@ -42,3 +54,4 @@ const SavedResults = (props) => {
 }
 
 export default SavedResults
+
