@@ -57,7 +57,7 @@ const App = () => {
       })))
     }
   }, [jobsData, searchInputs]);
-  // console.log(companyData)
+  console.log(companyData)
 
   //Notes: why writing filter data in handleSearch doesn't work - User selects new category handleSearch calls setCategory -> handleSearch tries to filter jobsData immediately -> But the API fetch triggered by the category change hasn't completed yet -> So you're filtering old data before new data arrives
   const handleSearch = (newInputs) => {
@@ -65,16 +65,17 @@ const App = () => {
     setSearchInputs(newInputs);
   }
 
-  //Notes: saves each company's data (which in an array) whenever companyData updates
+  //Notes: replaces each company's data (which in an array) in airtable whenever companyData updates
   useEffect(() => {
-    const saveToAirtable = async () => {
+    const updateAirtable = async () => {
       if (companyData.length > 0) {
+        await jobService.deleteAll();
         for (let i = 0; i < companyData.length; i++) {
           await jobService.create(companyData[i]);
         }
       }
     };
-    saveToAirtable();
+    updateAirtable();
   }, [companyData]);
 
   return (

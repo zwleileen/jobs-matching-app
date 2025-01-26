@@ -19,7 +19,7 @@ async function index(category) {
 }
 
 async function create(companyData) {
-  console.log("data received:", companyData);
+  //   console.log("data received:", companyData);
   const url = "https://api.airtable.com/v0/appw9wRJh8QZRzdTo/companyId";
   const API_KEY =
     "patBs0UGOdhpF8r4C.8d34f97773a641fb58486d125b0195875081a722649ae023e3851ecf00eb7df2";
@@ -47,10 +47,34 @@ async function create(companyData) {
       throw new Error(`Response status: ${response.status}`);
     }
     const json = await response.json();
+
+    console.log("Created record ID:", json.records[0].id);
+    const newRecordedId = json.records[0].id;
+    recordIds.push(newRecordedId);
     return json;
   } catch (error) {
     console.error(error.message);
   }
 }
 
-export { index, create };
+let recordIds = []; //initiate an array to store recordIds
+
+async function deleteAll() {
+  const API_KEY =
+    "patBs0UGOdhpF8r4C.8d34f97773a641fb58486d125b0195875081a722649ae023e3851ecf00eb7df2";
+
+  for (const recordId of recordIds) {
+    const url = `https://api.airtable.com/v0/appw9wRJh8QZRzdTo/companyId/${recordId}`;
+    try {
+      await fetch(url, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${API_KEY}` },
+      });
+    } catch (error) {
+      console.error(`Error deleting record ${recordId}:`, error);
+    }
+  }
+  recordIds = []; //Clear the array after deletion
+}
+
+export { index, create, deleteAll };
