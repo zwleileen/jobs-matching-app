@@ -23,17 +23,14 @@ const SearchInputs = (props) => {
                 <option value="">Location</option>
                 <option value="Flexible / Remote">Flexible / Remote</option>
                 <option value="Singapore">Singapore</option>
-                <option value="Shanghai, China">Shanghai, China</option>
-                <option value="Seoul, South Korea">Seoul, South Korea</option>
-                <option value="Melbourne, Australia">Melbourne, Australia</option>
-                <option value="Taipei, Taiwan">Taipei, Taiwan</option>
-                <option value="Tokyo, Japan">Tokyo, Japan</option>
             </select>
             <select id="category" name="category" value={props.searchInputs.category} onChange={handleChange}>
                 <option value="">Category</option>
                 <option value="Software%20Engineering">Software Engineering</option>
                 <option value="Product%20Management">Product Management</option>
                 <option value="Data%20and%20Analytics">Data and Analytics</option>
+                <option value="Design%20and%20UX">Design and UX</option>
+                <option value="Project%20Management">Project Management</option>
             </select>
             <button onClick={reset}>Clear Search</button>
             </form>
