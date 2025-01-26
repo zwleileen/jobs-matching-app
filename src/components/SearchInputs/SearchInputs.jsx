@@ -20,9 +20,8 @@ const SearchInputs = (props) => {
         <h3>Select the location and job category to begin your search</h3>
             <form>
             <select id="values" name="values" value={props.searchInputs.values} onChange={handleChange}>
-                <option value="">Company Values</option>
-                <option value="creativity">Creativity</option>
-                <option value="joy">Joy</option>
+                {props.valuesList.map(value => (
+                    <option key={value} value={value}>{value}</option>))}
             </select>
             <select id="category" name="category" value={props.searchInputs.category} onChange={handleChange}>
                 <option value="">Job Category</option>

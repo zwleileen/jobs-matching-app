@@ -14,6 +14,7 @@ const App = () => {
     values: "",
     category: ""
   });
+  const [valuesList, setValuesList] = useState([]);  
   const [savedResults, setSavedResults] = useState([]);
   const [category, setCategory] = useState("Software%20Engineering");
   const [loading, setLoading] = useState(false);
@@ -45,18 +46,18 @@ const App = () => {
 
   //Notes: filters data when (and AFTER) jobsData or searchInputs update, to make sure we filter the updated data
   useEffect(() => {
-  if (searchInputs.category) {
+  if (searchInputs.values || searchInputs.category) {
     const searches = jobsData.filter(job => {
       const encodedRole = encodeURIComponent(job.role);
       const cleanContent = job.content.replace(/<[^>]*>|<br\/>|\n/g, ' ');
       const values = searchInputs.values.toLowerCase().split(',')
       return values.some(value => {
-        const regex = new RegExp(`\\b${value.trim()}\\b`, 'i');
+        const regex = new RegExp(`\\b${value.trim()}\\b`, 'i'); //Notes: this ensures the whole word e.g. "creativity" is checked and not just parts of the word
         return regex.test(cleanContent);
       }) && encodedRole === searchInputs.category;
     });
     setSearchResults(searches);
-    console.log(searches)
+    // console.log(searches)
     const newCount = searches.length;
     setCount(newCount);
   }
@@ -69,18 +70,14 @@ const App = () => {
     setSearchInputs(newInputs);
   }
 
-  //Notes: replaces each company's data (which in an array) in airtable whenever companyData updates
-  // useEffect(() => {
-  //   const updateAirtable = async () => {
-  //     if (companyData.length > 0) {
-  //       await jobService.deleteAll();
-  //       for (let i = 0; i < companyData.length; i++) {
-  //         await jobService.create(companyData[i]);
-  //       }
-  //     }
-  //   };
-  //   updateAirtable();
-  // }, [companyData]);
+  useEffect(() => {
+    const fetchValues = async () => {
+      const values = await jobService.getValues();
+      setValuesList(values);
+    }
+    fetchValues();
+  }, [])
+ 
 
   useEffect(() => {
     const fetchCompanyDetails = async () => {
@@ -108,7 +105,7 @@ const App = () => {
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails} count={count} setCount={setCount}/>} />
+    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} valuesList={valuesList} setValuesList={setValuesList} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails} count={count} setCount={setCount}/>} />
     <Route path="savedjobs" element={<SavedResults savedResults={savedResults} setSavedResults={setSavedResults} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails}/>}/>
   </Routes>
   </>

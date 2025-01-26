@@ -18,6 +18,38 @@ async function index(category) {
   }
 }
 
+async function getValues() {
+  const records = [
+    "recOm3cfRIntmcmI3",
+    "recyWiw3hy5jwbfTd",
+    "recByGYH2YiwYJclu",
+  ];
+  const API_KEY =
+    "patBs0UGOdhpF8r4C.8d34f97773a641fb58486d125b0195875081a722649ae023e3851ecf00eb7df2";
+  const values = [];
+
+  for (const recordId of records) {
+    const url = `https://api.airtable.com/v0/appw9wRJh8QZRzdTo/Inputs_Values/${recordId}`;
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${API_KEY}`,
+        },
+      });
+      console.log(response);
+      if (!response.ok) throw new Error(`Response status: ${response.status}`);
+
+      const data = await response.json();
+      console.log(data);
+      values.push(data.fields.values);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+  return values;
+}
+
 // async function create(companyData) {
 //   //   console.log("data received:", companyData);
 //   const url = "https://api.airtable.com/v0/appw9wRJh8QZRzdTo/companyId";
@@ -110,4 +142,4 @@ async function companyDetails(companyId) {
   }
 }
 
-export { index, companyDetails };
+export { index, getValues, companyDetails };
