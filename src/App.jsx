@@ -50,9 +50,13 @@ const App = () => {
       const encodedRole = encodeURIComponent(job.role);
       const cleanContent = job.content.replace(/<[^>]*>|<br\/>|\n/g, ' ');
       const values = searchInputs.values.toLowerCase().split(',')
-      return values.some(value => cleanContent.toLowerCase().includes(value.trim())) || encodedRole === searchInputs.category;
+      return values.some(value => {
+        const regex = new RegExp(`\\b${value.trim()}\\b`, 'i');
+        return regex.test(cleanContent);
+      }) && encodedRole === searchInputs.category;
     });
     setSearchResults(searches);
+    console.log(searches)
     const newCount = searches.length;
     setCount(newCount);
   }
