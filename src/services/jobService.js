@@ -19,7 +19,8 @@ async function index(category) {
 }
 
 async function create(companyData) {
-  const url = "https://api.airtable.com/v0/appw9wRJh8QZRzdTo/Table%201";
+  console.log("data received:", companyData);
+  const url = "https://api.airtable.com/v0/appw9wRJh8QZRzdTo/companyId";
   const API_KEY =
     "patBs0UGOdhpF8r4C.8d34f97773a641fb58486d125b0195875081a722649ae023e3851ecf00eb7df2";
   try {
@@ -32,12 +33,17 @@ async function create(companyData) {
       body: JSON.stringify({
         records: [
           {
-            fields: companyData,
+            fields: {
+              company: companyData.company,
+              companyId: String(companyData.companyId),
+            },
           },
         ],
       }),
     });
     if (!response.ok) {
+      const errorData = await response.json();
+      console.log("airtable error:", errorData);
       throw new Error(`Response status: ${response.status}`);
     }
     const json = await response.json();

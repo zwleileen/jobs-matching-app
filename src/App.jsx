@@ -17,10 +17,7 @@ const App = () => {
   const [savedResults, setSavedResults] = useState([]);
   const [category, setCategory] = useState("Software%20Engineering");
   const [loading, setLoading] = useState(false);
-  const [companyData, setCompanyData] = useState({
-    company: "",
-    companyId: ""
-  })
+  const [companyData, setCompanyData] = useState([])
   
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -67,6 +64,18 @@ const App = () => {
     setCategory(newInputs.category);
     setSearchInputs(newInputs);
   }
+
+  //Notes: saves each company's data (which in an array) whenever companyData updates
+  useEffect(() => {
+    const saveToAirtable = async () => {
+      if (companyData.length > 0) {
+        for (let i = 0; i < companyData.length; i++) {
+          await jobService.create(companyData[i]);
+        }
+      }
+    };
+    saveToAirtable();
+  }, [companyData]);
 
   return (
   <>
