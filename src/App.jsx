@@ -11,13 +11,12 @@ const App = () => {
   const [jobsData, setJobsData] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [searchInputs, setSearchInputs] = useState({
-    location: "",
+    values: "",
     category: ""
   });
   const [savedResults, setSavedResults] = useState([]);
   const [category, setCategory] = useState("Software%20Engineering");
   const [loading, setLoading] = useState(false);
-  const [companyIds, setCompanyIds] = useState([]);
   const [companyDetails, setcompanyDetails] = useState([]);
   
   const fetchData = useCallback(async () => {
@@ -28,7 +27,7 @@ const App = () => {
     {
       id: job.id,
       company: job.company?.name || 'Unknown Company',
-      // location: job.locations?.[0]?.name || 'No location listed',
+      content: job.contents || 'No content provided',
       role: job.categories?.[0]?.name || 'No role listed',
       link: job.refs?.landing_page || '#',
       companyId: job.company?.id
@@ -51,12 +50,7 @@ const App = () => {
       return job.location === searchInputs.location || encodedRole === searchInputs.category;
     });
     setSearchResults(searches);
-    setCompanyIds(searches.map(search => (
-      {
-        company: search.company,
-        companyId: search.companyId
-      })))
-    }
+  }
   }, [jobsData, searchInputs]);
   // console.log(companyIds)
 
@@ -81,9 +75,9 @@ const App = () => {
 
   useEffect(() => {
     const fetchCompanyDetails = async () => {
-      if (companyIds.length > 0) {
+      if (searchResults.length > 0) {
         const details = await Promise.all(
-          companyIds.map(async company => {
+          searchResults.map(async company => {
             const detail = await jobService.companyDetails(company.companyId);
             return {
               id: detail.id,
@@ -97,7 +91,7 @@ const App = () => {
       }
     };
     fetchCompanyDetails();
-  }, [companyIds]);
+  }, [searchResults]);
   console.log(companyDetails);
       
 
