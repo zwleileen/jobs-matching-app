@@ -18,4 +18,33 @@ async function index(category) {
   }
 }
 
-export { index };
+async function create(companyData) {
+  const url = "https://api.airtable.com/v0/appw9wRJh8QZRzdTo/Table%201";
+  const API_KEY =
+    "patBs0UGOdhpF8r4C.8d34f97773a641fb58486d125b0195875081a722649ae023e3851ecf00eb7df2";
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        records: [
+          {
+            fields: companyData,
+          },
+        ],
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`Response status: ${response.status}`);
+    }
+    const json = await response.json();
+    return json;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+export { index, create };

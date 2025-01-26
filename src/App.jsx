@@ -17,6 +17,10 @@ const App = () => {
   const [savedResults, setSavedResults] = useState([]);
   const [category, setCategory] = useState("Software%20Engineering");
   const [loading, setLoading] = useState(false);
+  const [companyData, setCompanyData] = useState({
+    company: "",
+    companyId: ""
+  })
   
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -28,7 +32,8 @@ const App = () => {
       company: job.company?.name || 'Unknown Company',
       location: job.locations?.[0]?.name || 'No location listed',
       role: job.categories?.[0]?.name || 'No role listed',
-      link: job.refs?.landing_page || '#'
+      link: job.refs?.landing_page || '#',
+      companyId: job.company?.id
     }))
     setJobsData(formattedData);
     setLoading(false);
@@ -48,15 +53,20 @@ const App = () => {
       return job.location === searchInputs.location || encodedRole === searchInputs.category;
     });
     setSearchResults(searches);
+    setCompanyData(searches.map(search => (
+      {
+        company: search.company,
+        companyId: search.companyId
+      })))
     }
   }, [jobsData, searchInputs]);
+  // console.log(companyData)
 
   //Notes: why writing filter data in handleSearch doesn't work - User selects new category handleSearch calls setCategory -> handleSearch tries to filter jobsData immediately -> But the API fetch triggered by the category change hasn't completed yet -> So you're filtering old data before new data arrives
   const handleSearch = (newInputs) => {
     setCategory(newInputs.category);
     setSearchInputs(newInputs);
   }
-
 
   return (
   <>
