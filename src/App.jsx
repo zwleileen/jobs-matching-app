@@ -16,8 +16,10 @@ const App = () => {
   });
   const [savedResults, setSavedResults] = useState([]);
   const [category, setCategory] = useState("Software%20Engineering");
+  const [loading, setLoading] = useState(false);
   
   const fetchData = useCallback(async () => {
+    setLoading(true)
     const data = await jobService.index(category);
     console.log(data) 
     const formattedData = data.results.map(job => (
@@ -29,6 +31,7 @@ const App = () => {
       link: job.refs?.landing_page || '#'
     }))
     setJobsData(formattedData);
+    setLoading(false);
   }, [category]);
   console.log(jobsData);
 
@@ -59,7 +62,7 @@ const App = () => {
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory}/>}  />
+    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} />} />
     <Route path="savedjobs" element={<SavedResults savedResults={savedResults} setSavedResults={setSavedResults}/>}/>
   </Routes>
   </>

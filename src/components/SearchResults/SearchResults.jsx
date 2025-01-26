@@ -18,6 +18,8 @@ const SearchResults = (props) => {
         <>
         {!props.searchResults.length ? (
         <p>No result to show, try modifying your search</p> 
+        ) : props.loading ? (
+        <p>Loading...</p>
         ) : (
         <ul>
         {props.searchResults.map((result) => (
@@ -27,11 +29,11 @@ const SearchResults = (props) => {
                 </button>
                 <h3>{result.company}</h3>
                 <p>{result.role}</p>
-                <p>{result.location}</p>
+               <p>{result.location}</p>
             </li>
         ))}
         </ul>
-        )}
+        )}    
         </>
     )
 }

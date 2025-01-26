@@ -5,8 +5,13 @@ const SearchInputs = (props) => {
         props.handleSearch(newInputs);
     }
 
-    const reset = () => {
-        props.setSearchResults([]);
+    const reset = (event) => {
+        event.preventDefault(); //Notes: prevents page from refreshing and lose all the React state updates 
+        props.setSearchInputs({
+            location: "",
+            category: ""
+          });
+          props.setSearchResults([]);
     }
     
     return (
