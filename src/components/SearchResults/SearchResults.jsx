@@ -21,6 +21,8 @@ const SearchResults = (props) => {
         ) : props.loading ? (
         <p>Loading...</p>
         ) : (
+        <div>
+        <p>Showing {props.count} results</p>
         <ul>
         {props.searchResults.map((result) => {
         
@@ -34,7 +36,7 @@ const SearchResults = (props) => {
                 <p>Role: {result.role}</p>  
                 {matchingDetail ? (
                     <>
-                    <p>Industry: {matchingDetail.industries.length ? matchingDetail.industries.join(', ') : 'Not sure, click to read on'}</p> 
+                    <p>Industry: {Array.isArray(matchingDetail.industries) ? matchingDetail.industries.join(', ') : 'Not sure, click to read on'}</p> 
                     {/* <p>Description: {matchingDetail.description || 'Click to find out'}</p> */}
                     </>
                 ) : (
@@ -46,6 +48,7 @@ const SearchResults = (props) => {
             </li>
         )})} 
         </ul>
+        </div>
         )}    
         </>
     )

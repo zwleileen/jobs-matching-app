@@ -81,16 +81,32 @@ async function index(category) {
 async function companyDetails(companyId) {
   const BASE_URL = "https://www.themuse.com/api/public/companies";
   const url = `${BASE_URL}/${companyId}`;
+  //   console.log(url);
 
   try {
     const response = await fetch(url);
+
+    if (response.status === 404) {
+      return {
+        id: companyId,
+        name: "Unknown Company",
+        description: "No description available",
+        industries: [],
+      };
+    }
+
     if (!response.ok) throw new Error(`Response status: ${response.status}`);
     const json = await response.json();
     // console.log("companyDetails:", json);
     return json;
   } catch (error) {
     console.error(error.message);
-    return { results: [] };
+    return {
+      id: companyId,
+      name: "Unknown Company",
+      description: "No description available",
+      industries: [],
+    };
   }
 }
 

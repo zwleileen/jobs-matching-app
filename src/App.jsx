@@ -18,6 +18,7 @@ const App = () => {
   const [category, setCategory] = useState("Software%20Engineering");
   const [loading, setLoading] = useState(false);
   const [companyDetails, setcompanyDetails] = useState([]);
+  const [count, setCount] = useState();
   
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -35,7 +36,7 @@ const App = () => {
     setJobsData(formattedData);
     setLoading(false);
   }, [category]);
-  console.log(jobsData);
+  // console.log(jobsData);
 
   //Note: fetches data when category changes
   useEffect(() => {
@@ -47,11 +48,15 @@ const App = () => {
   if (searchInputs.category) {
     const searches = jobsData.filter(job => {
       const encodedRole = encodeURIComponent(job.role);
-      return job.location === searchInputs.location || encodedRole === searchInputs.category;
+      const cleanContent = job.content.replace(/<[^>]*>|<br\/>|\n/g, ' ');
+      const values = searchInputs.values.toLowerCase().split(',')
+      return values.some(value => cleanContent.toLowerCase().includes(value.trim())) || encodedRole === searchInputs.category;
     });
     setSearchResults(searches);
+    const newCount = searches.length;
+    setCount(newCount);
   }
-  }, [jobsData, searchInputs]);
+  }, [count, jobsData, searchInputs]);
   // console.log(companyIds)
 
   //Notes: why writing filter data in handleSearch doesn't work - User selects new category handleSearch calls setCategory -> handleSearch tries to filter jobsData immediately -> But the API fetch triggered by the category change hasn't completed yet -> So you're filtering old data before new data arrives
@@ -92,14 +97,14 @@ const App = () => {
     };
     fetchCompanyDetails();
   }, [searchResults]);
-  console.log(companyDetails);
+  // console.log(companyDetails);
       
 
   return (
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails}/>} />
+    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails} count={count} setCount={setCount}/>} />
     <Route path="savedjobs" element={<SavedResults savedResults={savedResults} setSavedResults={setSavedResults} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails}/>}/>
   </Routes>
   </>
