@@ -17,17 +17,18 @@ const App = () => {
   const [savedResults, setSavedResults] = useState([]);
   const [category, setCategory] = useState("Software%20Engineering");
   const [loading, setLoading] = useState(false);
-  const [companyData, setCompanyData] = useState([])
+  const [companyIds, setCompanyIds] = useState([]);
+  const [companyDetails, setcompanyDetails] = useState([]);
   
   const fetchData = useCallback(async () => {
     setLoading(true)
     const data = await jobService.index(category);
-    console.log(data) 
+    // console.log(data) 
     const formattedData = data.results.map(job => (
     {
       id: job.id,
       company: job.company?.name || 'Unknown Company',
-      location: job.locations?.[0]?.name || 'No location listed',
+      // location: job.locations?.[0]?.name || 'No location listed',
       role: job.categories?.[0]?.name || 'No role listed',
       link: job.refs?.landing_page || '#',
       companyId: job.company?.id
@@ -50,14 +51,14 @@ const App = () => {
       return job.location === searchInputs.location || encodedRole === searchInputs.category;
     });
     setSearchResults(searches);
-    setCompanyData(searches.map(search => (
+    setCompanyIds(searches.map(search => (
       {
         company: search.company,
         companyId: search.companyId
       })))
     }
   }, [jobsData, searchInputs]);
-  console.log(companyData)
+  console.log(companyIds)
 
   //Notes: why writing filter data in handleSearch doesn't work - User selects new category handleSearch calls setCategory -> handleSearch tries to filter jobsData immediately -> But the API fetch triggered by the category change hasn't completed yet -> So you're filtering old data before new data arrives
   const handleSearch = (newInputs) => {
@@ -66,23 +67,45 @@ const App = () => {
   }
 
   //Notes: replaces each company's data (which in an array) in airtable whenever companyData updates
+  // useEffect(() => {
+  //   const updateAirtable = async () => {
+  //     if (companyData.length > 0) {
+  //       await jobService.deleteAll();
+  //       for (let i = 0; i < companyData.length; i++) {
+  //         await jobService.create(companyData[i]);
+  //       }
+  //     }
+  //   };
+  //   updateAirtable();
+  // }, [companyData]);
+
   useEffect(() => {
-    const updateAirtable = async () => {
-      if (companyData.length > 0) {
-        await jobService.deleteAll();
-        for (let i = 0; i < companyData.length; i++) {
-          await jobService.create(companyData[i]);
-        }
+    const fetchCompanyDetails = async () => {
+      if (companyIds.length > 0) {
+        const details = await Promise.all(
+          companyIds.map(async company => {
+            const detail = await jobService.companyDetails(company.companyId);
+            return {
+              id: detail.id,
+              company: detail.name,
+              description: detail.description || 'No description available',
+              industries: detail.industries?.length ? detail.industries.map(industry => industry.name) : 'Industry unknown'
+            };
+          })
+        );
+        setcompanyDetails(details);
       }
     };
-    updateAirtable();
-  }, [companyData]);
+    fetchCompanyDetails();
+  }, [companyIds]);
+  console.log(companyDetails);
+      
 
   return (
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} />} />
+    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails}/>} />
     <Route path="savedjobs" element={<SavedResults savedResults={savedResults} setSavedResults={setSavedResults}/>}/>
   </Routes>
   </>

@@ -22,16 +22,22 @@ const SearchResults = (props) => {
         <p>Loading...</p>
         ) : (
         <ul>
-        {props.searchResults.map((result) => (
+        {props.searchResults.map((result) => {
+        
+            const matchingDetail = props.companyDetails.find(detail => detail.id === result.companyId);
+            return(
             <li key={result.id} onClick={(event) => handleClick(result.link, event)} style={{ cursor: 'pointer' }}>
                 <button className="save-btn" onClick={() => handleSave(result)}>
                 <i className="material-icons">favorite</i>
                 </button>
                 <h3>{result.company}</h3>
-                <p>{result.role}</p>
-               <p>{result.location}</p>
+                <p>Role: {result.role}</p>  
+                {matchingDetail ? 
+                    <p>Industry: {matchingDetail.industries.length ? matchingDetail.industries.join(', ') : 'Not sure, click to find out'}</p> : 
+                    <p>Industry: Not sure, click to find out</p>
+                }
             </li>
-        ))}
+        )})} 
         </ul>
         )}    
         </>
