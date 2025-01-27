@@ -9,8 +9,9 @@ const SearchResults = (props) => {
         window.open(link, '_blank', 'noopener,noreferrer')
     }
 
-    const handleSave = (result) => {
+    const handleSave = async (result) => {
         props.setSavedResults([...props.savedResults, result]);
+        await props.saveToAirtable(result);
         navigate(`/savedjobs`);
     }
 
