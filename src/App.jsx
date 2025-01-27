@@ -30,14 +30,15 @@ const App = () => {
       id: job.id,
       company: job.company?.name || 'Unknown Company',
       content: job.contents || 'No content provided',
-      role: job.categories?.[0]?.name || 'No role listed',
+      category: job.categories[0].name,
+      role: job.name || 'No role listed',
       link: job.refs?.landing_page || '#',
       companyId: job.company?.id
     }))
     setJobsData(formattedData);
     setLoading(false);
   }, [category]);
-  // console.log(jobsData);
+  console.log(jobsData);
 
   //Note: fetches data when category changes
   useEffect(() => {
@@ -48,13 +49,13 @@ const App = () => {
   useEffect(() => {
   if (searchInputs.values || searchInputs.category) {
     const searches = jobsData.filter(job => {
-      const encodedRole = encodeURIComponent(job.role);
+      const encodedCategory = encodeURIComponent(job.category);
       const cleanContent = job.content.replace(/<[^>]*>|<br\/>|\n/g, ' ');
       const values = searchInputs.values.toLowerCase().split(',')
       return values.some(value => {
         const regex = new RegExp(`\\b${value.trim()}\\b`, 'i'); //Notes: this ensures the whole word e.g. "creativity" is checked and not just parts of the word
         return regex.test(cleanContent);
-      }) && encodedRole === searchInputs.category;
+      }) && encodedCategory === searchInputs.category;
     });
     setSearchResults(searches);
     // console.log(searches)
@@ -73,10 +74,12 @@ const App = () => {
   useEffect(() => {
     const fetchValues = async () => {
       const values = await jobService.getValues();
-      if(values) { 
+      if(values.length > 0) { 
         setValuesList(values);
-      } setValuesList(["Company Values", "Joy", "Creativity", "Inclusive", "Equity"])
-    }
+      } else {
+        setValuesList(["Company Values", "Joy", "Creativity", "Inclusive", "Equity"])
+      }
+      };
     fetchValues();
   }, [])
 
@@ -90,7 +93,6 @@ const App = () => {
     }
   };
 
- 
 
   useEffect(() => {
     const fetchCompanyDetails = async () => {
