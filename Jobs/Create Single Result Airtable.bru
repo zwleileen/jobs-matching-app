@@ -1,0 +1,50 @@
+meta {
+  name: Create Single Result Airtable
+  type: http
+  seq: 9
+}
+
+post {
+  url: https://api.airtable.com/v0/appw9wRJh8QZRzdTo/savedResults
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer patBs0UGOdhpF8r4C.8d34f97773a641fb58486d125b0195875081a722649ae023e3851ecf00eb7df2
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "records": [
+      {
+        "fields": {
+          "company": "savedResult.company",
+          "companyId": "savedResult.companyId",
+          "id": "savedResult.id",
+          "content": "savedResult.content",
+          "role": "savedResult.role",
+          "link": "savedResult.link"
+        }
+      }
+    ]
+  }
+}
+
+body:text {
+  body: JSON.stringify({
+          records: [
+            {
+              fields: {
+                company: savedResult.company,
+                companyId: String(savedResult.companyId),
+                id: String(savedResult.id),
+                content: savedResult.content,
+                role: savedResult.role,
+                link: savedResult.link,
+              },
+            },
+          ],
+        })
+}
