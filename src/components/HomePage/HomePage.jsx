@@ -9,7 +9,7 @@ const HomePage = (props) => {
     return (
     <>
         <div className="homepage">
-            <h3>Find jobs in Singapore with a twist</h3>
+            <h3>Find jobs in Singapore</h3>
             <button onClick={() => navigate(`/savedjobs`)} >Saved Jobs</button>
         </div>
         <SearchInputs searchResults={props.searchResults} setSearchResults={props.setSearchResults} searchInputs={props.searchInputs} setSearchInputs={props.setSearchInputs} valuesList={props.valuesList} setValuesList={props.setValuesList} handleSearch={props.handleSearch} category={props.category} setCategory={props.setCategory} />
