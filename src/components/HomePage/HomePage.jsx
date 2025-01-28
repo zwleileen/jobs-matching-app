@@ -13,7 +13,7 @@ const HomePage = (props) => {
             <button onClick={() => navigate(`/savedjobs`)} >Saved Jobs</button>
         </div>
         <SearchInputs searchResults={props.searchResults} setSearchResults={props.setSearchResults} searchInputs={props.searchInputs} setSearchInputs={props.setSearchInputs} valuesList={props.valuesList} setValuesList={props.setValuesList} handleSearch={props.handleSearch} category={props.category} setCategory={props.setCategory} />
-        <SearchResults searchResults={props.searchResults} savedResults={props.savedResults} setSavedResults={props.setSavedResults} loading={props.loading} companyDetails={props.companyDetails} setCompanyDetails={props.setCompanyDetails} count={props.count} setCount={props.setCount} saveToAirtable={props.saveToAirtable}/>
+        <SearchResults searchResults={props.searchResults} savedResults={props.savedResults} setSavedResults={props.setSavedResults} loading={props.loading} companyDetails={props.companyDetails} setCompanyDetails={props.setCompanyDetails} count={props.count} setCount={props.setCount} jobService={props.jobService}/>
     </>
     )
 }

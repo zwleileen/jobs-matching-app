@@ -9,11 +9,26 @@ const SearchResults = (props) => {
         window.open(link, '_blank', 'noopener,noreferrer')
     }
 
+    // const handleSave = async (result) => {
+    //     // props.setSavedResults([...props.savedResults, result]);
+    //     await props.saveToAirtable(result);
+    //     navigate(`/savedjobs`);
+    // }
+
     const handleSave = async (result) => {
-        props.setSavedResults([...props.savedResults, result]);
-        await props.saveToAirtable(result);
-        navigate(`/savedjobs`);
+        try {
+        const response = await props.jobService.create(result);
+        if (response && response.records && response.records[0]) {
+            // Update local state with the new record from Airtable
+            props.setSavedResults(prevResults => [...prevResults, response.records[0].fields]);
+            navigate(`/savedjobs`);
+        } else {
+            console.error('Invalid response from Airtable');
+        }
+    } catch (error) {
+        console.error('Failed to save:', error);
     }
+    };
 
     return (
         <>

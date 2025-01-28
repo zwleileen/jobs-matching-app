@@ -83,17 +83,6 @@ const App = () => {
     fetchValues();
   }, [])
 
-
-  const saveToAirtable = async (savedResult) => {
-    try {
-      const response = await jobService.create(savedResult);
-      setSavedResults(prev => [...prev, response.records[0]]);
-    } catch (error) {
-      console.error("Failed to save result:", error);
-    }
-  };
-
-
   useEffect(() => {
     const fetchCompanyDetails = async () => {
       if (searchResults.length > 0) {
@@ -120,7 +109,7 @@ const App = () => {
   <>
   <h1>Jobs Matching App</h1>
   <Routes>
-    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} valuesList={valuesList} setValuesList={setValuesList} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails} count={count} setCount={setCount} saveToAirtable={saveToAirtable}/>} />
+    <Route path="/" element={<HomePage jobs={jobsData} searchResults={searchResults} setSearchResults={setSearchResults} handleSearch={handleSearch} searchInputs={searchInputs} setSearchInputs={setSearchInputs} valuesList={valuesList} setValuesList={setValuesList} savedResults={savedResults} setSavedResults={setSavedResults} category={category} setCategory={setCategory} loading={loading} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails} count={count} setCount={setCount} jobService={jobService}/>} />
     <Route path="savedjobs" element={<SavedResults savedResults={savedResults} setSavedResults={setSavedResults} companyDetails={companyDetails} setcompanyDetails={setcompanyDetails}/>}/>
   </Routes>
   </>

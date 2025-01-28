@@ -79,6 +79,7 @@ async function create(savedResult) {
     return json;
   } catch (error) {
     console.error(error.message);
+    throw error; // Re-throw the error so we can catch it in handleSave
   }
 }
 
