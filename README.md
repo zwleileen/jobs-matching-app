@@ -11,7 +11,7 @@ The user stories for an MVP version of the jobs matching app, as well as wirefra
 
 Several minor changes have been made to the initial wireframes while developing the app:
 1. Changed the search inputs to job category and company values
-2. Changed to job details to company, role and industry
+2. Changed the job details to show company, role and industry
 
   
 # Pseudocode
