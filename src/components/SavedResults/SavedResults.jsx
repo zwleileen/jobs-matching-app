@@ -25,7 +25,7 @@ const SavedResults = (props) => {
             ) : (
             <ul>
             {props.savedResults.map((result) => {
-                const matchingDetail = props.companyDetails.find(detail => detail.id === result.companyId);
+                const matchingDetail = props.companyDetails.find(detail => Number(detail.id) === Number(result.companyId));
                 return (
                 <li key={result.id} onClick={(event) => handleClick(result.link, event)} style={{ cursor: 'pointer' }}>
                     <button className="unsave-btn" onClick={() => handleUnsave(result)}>
