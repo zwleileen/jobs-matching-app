@@ -1,3 +1,5 @@
+import JobCategory from "../JobCategory/JobCatgory";
+
 const SearchInputs = (props) => {
 
     const handleChange = ({target}) => {
@@ -20,12 +22,7 @@ const SearchInputs = (props) => {
         <div className="categorySearch">
         <label htmlFor="category">Select the job category to begin your search: </label>
             <select id="category" name="category" value={props.searchInputs.category} onChange={handleChange}>
-                <option value="">Job Category</option>
-                <option value="Software%20Engineering">Software Engineering</option>
-                <option value="Product%20Management">Product Management</option>
-                <option value="Data%20and%20Analytics">Data and Analytics</option>
-                <option value="Design%20and%20UX">Design and UX</option>
-                <option value="Project%20Management">Project Management</option>
+            <JobCategory/>
             </select>
         </div>
         <div className="valuesSearch">

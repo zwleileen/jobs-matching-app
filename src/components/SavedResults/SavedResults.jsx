@@ -36,12 +36,10 @@ const SavedResults = (props) => {
                     {matchingDetail ? (
                     <>
                     <p>Industry: {matchingDetail.industries.length ? matchingDetail.industries.join(', ') : 'Not sure, click to read on'}</p> 
-                    {/* <p>Description: {matchingDetail.description || 'Click to find out'}</p> */}
                     </>
                 ) : (
                     <>
                     <p>Industry: Not sure, click to read on</p>
-                    {/* <p>Description: Click to find out</p> */}
                     </>
                 )}
                 </li>

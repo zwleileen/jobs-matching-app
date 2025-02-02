@@ -47,12 +47,10 @@ const SearchResults = (props) => {
                 {matchingDetail ? (
                     <>
                     <p>Industry: {Array.isArray(matchingDetail.industries) ? matchingDetail.industries.join(', ') : 'Not sure, click to read on'}</p> 
-                    {/* <p>Description: {matchingDetail.description || 'Click to find out'}</p> */}
                     </>
                 ) : (
                     <>
                     <p>Industry: Not sure, click to read on</p>
-                    {/* <p>Description: Click to find out</p> */}
                     </>
                 )}
             </li>
