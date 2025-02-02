@@ -108,6 +108,10 @@ select:hover {
   border: 1px solid black;
   background-color: white;
 }
+
+.savedresults button:hover {
+  background-color: #FFFDE7;
+}
 .savedresultsbox {
   background-color: #EDECE4;
   width: 100%;
