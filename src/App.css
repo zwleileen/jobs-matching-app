@@ -162,6 +162,10 @@ li p {
   color: #020202;
 }
 
+.save-btn.saved .material-icons {
+  color:#ffea07;
+}
+
 .save-btn .material-icons:hover {
   color: #ffea07;
 }

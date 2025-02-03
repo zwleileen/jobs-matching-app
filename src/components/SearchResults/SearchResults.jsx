@@ -1,15 +1,29 @@
-import { useNavigate } from "react-router"
+// import { useNavigate } from "react-router"
+
+// import SavedResults from "../SavedResults/SavedResults";
 
 const SearchResults = (props) => {
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleClick = (link, event) => {
         if (event.target.closest('.save-btn')) return;
         window.open(link, '_blank', 'noopener,noreferrer')
     }
 
+    const saved = (result) => {
+        return props.savedResults.some(saved => String(saved.id) === String(result.id));
+    }
+
     const handleSave = async (result) => {
+
+        //if saved(result) is true, unsave it 
+        if (saved(result)) {
+            const newSaved = props.savedResults.filter(item => String(item.id) !== String(result.id));
+            props.setSavedResults(newSaved);
+            return;
+        }
+        //else, save it
         try {
             const matchingDetail = props.companyDetails.find(
                 detail => detail.id === result.companyId
@@ -20,7 +34,7 @@ const SearchResults = (props) => {
             if (response && response.records && response.records[0]) {
                 // Update local state with the new record from Airtable
                 props.setSavedResults(prevResults => [...prevResults, response.records[0].fields]);
-                navigate(`/savedjobs`);
+                // navigate(`/savedjobs`);
             } else {
                 console.error('Invalid response from Airtable');
             }
@@ -42,9 +56,11 @@ const SearchResults = (props) => {
         {props.searchResults.map((result) => {
         
             const matchingDetail = props.companyDetails.find(detail => detail.id === result.companyId);
+            const savedClassName = saved(result) ? 'saved' : '';
+
             return(
             <li key={result.id} onClick={(event) => handleClick(result.link, event)} style={{ cursor: 'pointer' }}>
-                <button className="save-btn" onClick={() => handleSave(result)}>
+                <button className={`save-btn ${savedClassName}`} onClick={() => handleSave(result)}>
                 <i className="material-icons">favorite</i>
                 </button>
                 <h3>{result.company}</h3>
