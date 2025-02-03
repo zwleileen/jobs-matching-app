@@ -69,13 +69,67 @@ handleSave(result2) // Tries to add result2
 Data fetched from URL combined with data fetched from another URL
 
 ## Using Promise when fetching data
+To ensure the page shows all the filtered results together, instead of loading one at a time, I used Promise in the following codes:
+```
+    useEffect(() => {
+      const fetchCompanyDetails = async () => {
+        if (searchResults.length > 0) {
+          const details = await Promise.all( 
+            searchResults.map(async company => {
+              const detail = await jobService.companyDetails(company.companyId);
+              return {
+                id: detail.id,
+                company: detail.name,
+                description: detail.description || 'No description available',
+                industries: detail.industries?.length ? detail.industries.map(industry => industry.name) : 'Industry unknown'
+              };
+            })
+          );
+          setCompanyDetails(details);
+        }
+      };
+      fetchCompanyDetails();
+    }, [searchResults, setCompanyDetails]);
+```
+- The use of Promise.all allows all API calls to happen concurrently rather than sequentially, making the data fetching much faster when there are multiple companies to look up
+- Without Promise, the fitered results show up in bits and pieces which is not conducive for user experience
+- useEffect here loads the page whenever there is a change in searchResults
 
 ## Checking for certain words in content
+For this app, I experimented with filtering jobs based on certain words in the job content, in addition to the job category. To find words that match, I have used the following codes:
+```
+      useEffect(() => {
+      if (searchInputs.values || searchInputs.category) {
+        const searches = jobsData.filter(job => {
 
+          const encodedCategory = encodeURIComponent(job.category); 
+          const categoryMatches = encodedCategory === searchInputs.category;
+
+          if (!searchInputs.values || searchInputs.values === "Company Value") {
+            return categoryMatches;
+          }
+
+          const cleanContent = job.content.replace(/<[^>]*>|<br\/>|\n/g, ' '); 
+          const values = searchInputs.values.toLowerCase().split(','); 
+
+          return values.some(value => {
+            const regex = new RegExp(`\\b${value.trim()}\\b`, 'i'); 
+            return regex.test(cleanContent);
+          }) && categoryMatches;
+        });
+        setSearchResults(searches);
+        setCount(searches.length);
+      }
+      }, [setCount, jobsData, searchInputs, setSearchResults]);
+```
+- I had to convert job category to URL-safe format in order to fetch the job with the API and this is done using encodeURIComponent()
+- To find words in job content, I first had to clean up the job content by replacing line breaks, HTML tags etc. with empty spacing, then I had to clean up the words by creating a regex that places boundary (\b) on the whole word and trim away any spacing
+- Without the boundary, the results could return any character match e.g. "val", instead of whole word match e.g. "value"
+  
 # Planned future enhancements
 To make the filtering based on values more meaningful, there are a few enhancements we can make:
 1. Expand the list of values and allow multiple selections
-2. Match the selected values based on context, instead of whenever/wherever the words appear
+2. Match the selected values based on context, instead of whenever/wherever the words appear in the content
 3. Allow multiple users by adding sign-in and user account features
 4. Expand the list of job categories
 5. Expand the jobs to include jobs located in other geographical markets

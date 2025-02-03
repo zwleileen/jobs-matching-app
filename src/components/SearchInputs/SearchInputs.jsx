@@ -8,19 +8,19 @@ const SearchInputs = ({searchInputs, setSearchInputs, setCount, jobsData, setSea
       if (searchInputs.values || searchInputs.category) {
         const searches = jobsData.filter(job => {
 
-          const encodedCategory = encodeURIComponent(job.category);
+          const encodedCategory = encodeURIComponent(job.category); //convert to URL-safe format e.g. "Software Engineering" -> "Software%20Engineering"
           const categoryMatches = encodedCategory === searchInputs.category;
 
           if (!searchInputs.values || searchInputs.values === "Company Value") {
             return categoryMatches;
           }
 
-          const cleanContent = job.content.replace(/<[^>]*>|<br\/>|\n/g, ' ');
-          const values = searchInputs.values.toLowerCase().split(',')
+          const cleanContent = job.content.replace(/<[^>]*>|<br\/>|\n/g, ' '); //clean the job content by replacing line breaks, HTML tags etc with empty space
+          const values = searchInputs.values.toLowerCase().split(',') //split searchInput values into an array with , in between e.g. ["creativity","joy"]
 
           return values.some(value => {
-            const regex = new RegExp(`\\b${value.trim()}\\b`, 'i'); //Notes: this ensures the whole word e.g. "creativity" is checked and not just parts of the word
-            return regex.test(cleanContent);
+            const regex = new RegExp(`\\b${value.trim()}\\b`, 'i'); //Notes: create a regex that matches the whole word e.g. "creativity" is checked and not just parts of the word, \b means word boundary, i means case-sensitive
+            return regex.test(cleanContent); //test if this value appears in job content
           }) && categoryMatches;
         });
         setSearchResults(searches);
