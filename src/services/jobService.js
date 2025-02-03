@@ -84,10 +84,10 @@ async function create(savedResult, companyDetail) {
     const json = await response.json();
     // console.log("Response from Airtable:", json);
     return {
-      ...json,
+      ...json, //spreads all Airtable response data, including the airtableIds
       records: json.records.map((record) => ({
-        id: record.id,
-        fields: record.fields,
+        id: record.id, //brings airtableId to the top
+        fields: record.fields, //keeps actual data in the fields
       })),
     };
   } catch (error) {
