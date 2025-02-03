@@ -87,7 +87,7 @@ const App = () => {
       <h1>Jobs Matching App</h1>
       <Routes>
         <Route path="/" element={<HomePage savedResults={savedResults} setSavedResults={setSavedResults} count={count} setCount={setCount} companyDetails={companyDetails} setCompanyDetails={setCompanyDetails} searchResults={searchResults} setSearchResults={setSearchResults} searchInputs={searchInputs} setSearchInputs={setSearchInputs} jobsData={jobsData} setJobsData={setJobsData} valuesList={valuesList} setValuesList={setValuesList} category={category} setCategory={setCategory} loading={loading} jobService={jobService}/>} />
-        <Route path="savedjobs" element={<SavedResults savedResults={savedResults} setSavedResults={setSavedResults} companyDetails={companyDetails} setcompanyDetails={setCompanyDetails}/>}/>
+        <Route path="savedjobs" element={<SavedResults savedResults={savedResults} setSavedResults={setSavedResults} companyDetails={companyDetails} setcompanyDetails={setCompanyDetails} jobService={jobService} />}/>
       </Routes>
     </>
     );

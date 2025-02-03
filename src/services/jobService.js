@@ -82,11 +82,45 @@ async function create(savedResult, companyDetail) {
       throw new Error(`Response status: ${response.status}`);
     }
     const json = await response.json();
-    console.log("Response from Airtable:", json);
-    return json;
+    // console.log("Response from Airtable:", json);
+    return {
+      ...json,
+      records: json.records.map((record) => ({
+        id: record.id,
+        fields: record.fields,
+      })),
+    };
   } catch (error) {
     console.error(error.message);
     throw error; // Re-throw the error so we can catch it in handleSave
+  }
+}
+
+async function deleteRecord(airtableId) {
+  const url = `https://api.airtable.com/v0/appw9wRJh8QZRzdTo/savedResults/${airtableId}`;
+  const API_KEY =
+    "patBs0UGOdhpF8r4C.8d34f97773a641fb58486d125b0195875081a722649ae023e3851ecf00eb7df2";
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.log("airtable error:", errorData);
+      throw new Error(`Response status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log("Deleted from Airtable:", json);
+    return json;
+  } catch (error) {
+    console.error("Failed to delete record:", error.message);
+    throw error;
   }
 }
 
@@ -122,4 +156,4 @@ async function companyDetails(companyId) {
   }
 }
 
-export { index, getValues, create, companyDetails };
+export { index, getValues, create, deleteRecord, companyDetails };

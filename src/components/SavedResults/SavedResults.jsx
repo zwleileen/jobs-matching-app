@@ -9,9 +9,16 @@ const SavedResults = (props) => {
         window.open(link, '_blank', 'noopener,noreferrer')
     }
 
-    const handleUnsave = (result) => {
-        const newSavedResults = props.savedResults.filter(item => item.id !== result.id)
-        props.setSavedResults(newSavedResults);
+    const handleUnsave = async (result) => {
+        try {
+            await props.jobService.deleteRecord(result.airtableId);
+            
+            const newSavedResults = props.savedResults.filter(item => String(item.id) !== String(result.id));
+            props.setSavedResults(newSavedResults);
+            
+        } catch (error) {
+            console.error('Failed to unsave:', error);
+        }
     }
 
     return (

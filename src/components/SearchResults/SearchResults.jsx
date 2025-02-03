@@ -19,8 +19,17 @@ const SearchResults = (props) => {
 
         //if saved(result) is true, unsave it 
         if (saved(result)) {
-            const newSaved = props.savedResults.filter(item => String(item.id) !== String(result.id));
-            props.setSavedResults(newSaved);
+            try {
+                const savedResult = props.savedResults.find(item => String(item.id) === String(result.id));
+                if (savedResult && savedResult.airtableId) {
+                    await props.jobService.deleteRecord(savedResult.airtableId);
+                }
+                // Update local state
+                const newSaved = props.savedResults.filter(item => String(item.id) !== String(result.id));
+                props.setSavedResults(newSaved);
+            } catch (error) {
+                console.error('Failed to delete record:', error);
+            }
             return;
         }
         //else, save it
@@ -32,9 +41,7 @@ const SearchResults = (props) => {
             const response = await props.jobService.create(result, matchingDetail);     
 
             if (response && response.records && response.records[0]) {
-                // Update local state with the new record from Airtable
-                props.setSavedResults(prevResults => [...prevResults, response.records[0].fields]);
-                // navigate(`/savedjobs`);
+                props.setSavedResults(prevResults => [...prevResults, {...response.records[0].fields, airtableId: response.records[0].id}]);
             } else {
                 console.error('Invalid response from Airtable');
             }
