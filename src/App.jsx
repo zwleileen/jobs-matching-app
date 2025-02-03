@@ -63,7 +63,7 @@ const App = () => {
   useEffect(() => {
   const fetchCompanyDetails = async () => {
     if (searchResults.length > 0) {
-      const details = await Promise.all(
+      const details = await Promise.all( //Notes: use of Promise.all allows all API calls to happen concurrently rather than sequentially, making the data fetching much faster when there are multiple companies to look up
         searchResults.map(async company => {
           const detail = await jobService.companyDetails(company.companyId);
           return {

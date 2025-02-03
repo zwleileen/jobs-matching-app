@@ -42,7 +42,7 @@ async function getValues() {
   }
 }
 
-async function create(savedResult) {
+async function create(savedResult, companyDetail) {
   const url = "https://api.airtable.com/v0/appw9wRJh8QZRzdTo/savedResults";
   const API_KEY =
     "patBs0UGOdhpF8r4C.8d34f97773a641fb58486d125b0195875081a722649ae023e3851ecf00eb7df2";
@@ -64,6 +64,13 @@ async function create(savedResult) {
               content: savedResult.content,
               role: savedResult.role,
               link: savedResult.link,
+              companyDescription:
+                companyDetail?.description || "No description available",
+              industries: companyDetail?.industries
+                ? Array.isArray(companyDetail.industries)
+                  ? companyDetail.industries.join(", ")
+                  : companyDetail.industries
+                : "Industry unknown",
             },
           },
         ],
