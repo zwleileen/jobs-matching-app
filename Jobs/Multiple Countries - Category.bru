@@ -1,0 +1,18 @@
+meta {
+  name: Multiple Countries - Category
+  type: http
+  seq: 6
+}
+
+get {
+  url: https://www.themuse.com/api/public/jobs?category=Software%20Engineering&location=Munich, Germany&location=Singapore&page=1
+  body: none
+  auth: none
+}
+
+params:query {
+  category: Software Engineering
+  location: Munich, Germany
+  location: Singapore
+  page: 1
+}

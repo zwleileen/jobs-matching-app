@@ -1,42 +1,184 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+body {
+  width: 100%;
+  margin: 20px auto;
   text-align: center;
+  font-family: "Handlee", serif;
+  font-style: normal;
+}
+.root{
+  width: 100%;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1 {
+  font-weight: 400;
+  padding: 0;
+  margin: 40px 0 20px 0;
+  background-color: #FFFDE7;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.homepage {
+  display: flex;
+  justify-content: space-between;
+}
+.homepage h3 {
+  margin-left: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.homepage button {
+  font-family: "Handlee", serif;
+  margin: 0 20px 10px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+}
+.homepage button:hover {
+  background-color: #FFFDE7;
 }
 
-.card {
-  padding: 2em;
+.searchInputs {
+  background-color: #EDECE4;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.read-the-docs {
-  color: #888;
+.categorySearch {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin: 40px 0 0 20px;
+  gap: 30px;
+}
+
+.categorySearch select {
+  font-family: "Handlee", serif;
+  margin: 0 0 0 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.valuesSearch {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  margin: 20px 0 20px 20px;
+  gap: 30px;
+}
+
+.valuesSearch select {
+  font-family: "Handlee", serif;
+  margin: 0 0 0 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+select:hover {
+  background-color: #FFFDE7;
+}
+
+.searchInputs button {
+  font-family: "Handlee", serif;
+  align-self: flex-start;
+  margin: 0 0 40px 20px;
+  padding: 4px 16px;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.searchInputs button:hover {
+  background-color: #FFFDE7;
+}
+
+.savedresults {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.savedresults button {
+  font-family: "Handlee", serif;
+  margin: 0 20px 10px;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.savedresults button:hover {
+  background-color: #FFFDE7;
+}
+.savedresultsbox {
+  background-color: #EDECE4;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  background-color: white;
+  width: 200px;
+  border-radius: 10px;
+  padding: 5px;
+}
+li:hover {
+  background-color: #FFFDE7;
+}
+
+li h3 {
+  margin-top: 0;
+}
+li p {
+  margin-top: 0;
+}
+
+.save-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-self: flex-end;
+}
+
+.save-btn .material-icons {
+  font-size: 24px;
+  color: #020202;
+}
+
+.save-btn .material-icons:hover {
+  color: #ffea07;
+}
+
+.unsave-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-self: flex-end;
+}
+
+.unsave-btn .material-icons {
+  font-size: 24px;
+  color: #ffea07;
+}
+
+.unsave-btn .material-icons:hover {
+  color: #020202;
 }
