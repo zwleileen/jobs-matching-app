@@ -7,13 +7,21 @@ const SearchInputs = ({searchInputs, setSearchInputs, setCount, jobsData, setSea
       useEffect(() => {
       if (searchInputs.values || searchInputs.category) {
         const searches = jobsData.filter(job => {
+
           const encodedCategory = encodeURIComponent(job.category);
+          const categoryMatches = encodedCategory === searchInputs.category;
+
+          if (!searchInputs.values || searchInputs.values === "Company Value") {
+            return categoryMatches;
+          }
+
           const cleanContent = job.content.replace(/<[^>]*>|<br\/>|\n/g, ' ');
           const values = searchInputs.values.toLowerCase().split(',')
+
           return values.some(value => {
             const regex = new RegExp(`\\b${value.trim()}\\b`, 'i'); //Notes: this ensures the whole word e.g. "creativity" is checked and not just parts of the word
             return regex.test(cleanContent);
-          }) && encodedCategory === searchInputs.category;
+          }) && categoryMatches;
         });
         setSearchResults(searches);
         // console.log(searches)
