@@ -1,5 +1,5 @@
 # Project: Jobs Matching App
-This project is about developing a simple React App. I have chosen to develop an app on jobs matching using API from The Muse. You can try it here: [Emotions Word Game](https://zwleileen.github.io/emotions-word-game/).
+This project is about developing a simple React App. I have chosen to develop an app on jobs matching using API from The Muse. You can try it [here](https://jobsmatching.netlify.app/).
 
 # Description 
 This app allows user to search jobs in Singapore based on a primary criterion i.e. job category. The user can then filter the jobs further based on values e.g. joy, creativity, inclusive. 
